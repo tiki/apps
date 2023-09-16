@@ -1,6 +1,9 @@
-[submodule "shopify"]
-	path = shopify
-	url = https://github.com/tiki/app-shopify
 [submodule "receipt/capacitor"]
 	path = receipt/capacitor
 	url = https://github.com/tiki/app-receipt-capacitor
+[submodule "shopify/extensions"]
+	path = shopify/extensions
+	url = https://github.com/tiki/apps-shopify-extensions
+[submodule "shopify/web"]
+	path = shopify/web
+	url = https://github.com/tiki/apps-shopify-web

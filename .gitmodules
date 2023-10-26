@@ -7,3 +7,9 @@
 [submodule "shopify/web"]
 	path = shopify/web
 	url = https://github.com/tiki/apps-shopify-web
+[submodule "rewards/ios"]
+	path = rewards/ios
+	url = https://github.com/tiki/apps-rewards-ios
+[submodule "rewards/android"]
+	path = rewards/android
+	url = https://github.com/tiki/apps-rewards-android

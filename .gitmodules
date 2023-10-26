@@ -13,3 +13,6 @@
 [submodule "rewards/android"]
 	path = rewards/android
 	url = https://github.com/tiki/apps-rewards-android
+[submodule "rewards/capacitor"]
+	path = rewards/capacitor
+	url = https://github.com/tiki/apps-rewards-capacitor

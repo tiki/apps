@@ -1,0 +1,221 @@
+openapi: "3.0.2"
+info:
+  title: TIKI App Rewards user backend service
+  version: "1.0"
+
+security:
+  - TikiIDP: []
+
+paths:
+  /cards:
+    get:
+      summary: Get the user cards
+      responses:
+        "200":
+          description: List of the user's cards
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Card"
+        "404":
+          description: The user doesn't have any card
+    post:
+      summary: Add a user card
+      requestBody:
+        description: A JSON object containing the card information
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CardArray"
+      responses:
+        "201":
+          description: User card added
+    delete:
+      summary: Remove a user card
+
+      responses:
+        "204":
+          description: User card removed
+  /offers:
+    get:
+      summary: Get the user available offers
+      responses:
+        "200":
+          description: List of the user available offers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OfferArray"
+        "404":
+          description: No available offers to the user
+  /earnings:
+    get:
+      summary: Get the user's earnings, including estimates
+      responses:
+        "200":
+          description: List of the user available offers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Earnings"
+
+components:
+  securitySchemes:
+    TikiIDP:
+      type: http
+      scheme: bearer
+
+  schemas:
+    Card:
+      type: object
+      properties:
+        last4:
+          type: string
+        bin:
+          type: string
+        issuer:
+          type: string
+        network:
+          type: string
+          enum: ["VISA", "MASTERCARD", "AMERICAN EXPRESS", "DISCOVER"]
+
+    CardArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/Card"
+
+    Earnings:
+      type: object
+      properties:
+        lifetime:
+          type: number
+          format: double
+          description: Lifetime earnings
+        current:
+          type: number
+          format: double
+          description: Current earnings
+        month:
+          type: number
+          format: double
+          description: Earnings for the current month
+        estimate:
+          $ref: "#/components/schemas/Estimate"
+        contributors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Contributor"
+
+    Estimate:
+      type: object
+      properties:
+        min:
+          type: integer
+          description: Minimum estimate value
+        max:
+          type: integer
+          description: Maximum estimate value
+
+    Contributor:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Contributor's name
+        percentage:
+          type: number
+          format: double
+          description: Contribution percentage
+
+    Offer:
+      type: object
+      properties:
+        provider:
+          $ref: "#/components/schemas/AccountProvider"
+        description:
+          type: string
+          description: Offer description
+        url:
+          type: string
+          format: uri
+          description: URL for the offer
+
+    OfferArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/Offer"
+
+    AccountProvider:
+      type: string
+      enum:
+        - ACME_MARKETS
+        - ALBERTSONS
+        - AMAZON
+        - AMAZON_BETA
+        - AMAZON_CA
+        - AMAZON_UK
+        - ASDAUK
+        - BESTBUY
+        - BJS_WHOLESALE
+        - CARREFOURUK
+        - CHEWY
+        - COSTCO
+        - COSTOCOCA
+        - CVS
+        - DICKS_SPORTING_GOODS
+        - DOLLAR_GENERAL
+        - DOLLAR_TREE
+        - DOMINOS_PIZZA
+        - DOOR_DASH
+        - DRIZLY
+        - FAMILY_DOLLAR
+        - FOOD_4_LESS
+        - FOOD_LION
+        - FRED_MEYER
+        - GAP
+        - GIANT_EAGLE
+        - GRUBHUB
+        - HARRIS_TEETER
+        - HEB
+        - HOME_DEPOT
+        - HYVEE
+        - INSTACART
+        - JEWEL_OSCO
+        - KOHLS
+        - KROGER
+        - LOWES
+        - MACYS
+        - MARSHALLS
+        - MEIJER
+        - NIKE
+        - PCEXPRESSCA
+        - POSTMATES
+        - PUBLIX
+        - RALPHS
+        - RITE_AID
+        - SAFEWAY
+        - SAMS_CLUB
+        - SEAMLESS
+        - SEPHORA
+        - SHEINUK
+        - SHEINES
+        - SHEINUS
+        - SHOPRITE
+        - SPROUTS
+        - STAPLES
+        - STARBUCKS
+        - TACO_BELL
+        - TARGET
+        - TEMUUK
+        - TESCOUK
+        - TJ_MAXX
+        - UBER_EATS
+        - UBEREATSUK
+        - ULTA
+        - VONS
+        - WALGREENS
+        - WALMART
+        - WALMART_CA
+        - WEGMANS
+        - AMAZONBETAFR
+        - AMAZONBETAES
